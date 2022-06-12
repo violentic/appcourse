@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 ##
 from app import models, schemas, utils, database
 
-router = APIRouter(tags=['Users'])
+router = APIRouter(tags=['Admins'])
 
 
-@router.post('/register', status_code=status.HTTP_200_OK, response_model=schemas.UserOut)
+@router.post('/registeradmin', status_code=status.HTTP_200_OK, response_model=schemas.UserOut)
 def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
 
     user.password = utils.hash(user.password)
@@ -16,4 +16,4 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)
     db.commit()
     db.refresh(new_user)
 
-    # return new_user
+    return new_user

@@ -7,13 +7,13 @@ from pydantic import EmailStr
 ## news schema
 
 class NewsModel(BaseModel):
-    id: int
+    id: Optional[int]
     image: str
     summary: str
     newsHeader: str
     author: str
     publicationDate: str
-    updated_at: datetime
+    updated_at: Optional[datetime]
  
     class Config:
         orm_mode = True
@@ -22,10 +22,17 @@ class NewsModel(BaseModel):
 class NewsResponse(BaseModel):
     news: List[NewsModel]
 
+class CreateNews(BaseModel):
+    id: int
+    newsHeader: str
+
+    class Config:
+        orm_mode = True    
+
 
 ## events Schema
 class EventModel(BaseModel):
-    id: int
+    id: Optional[int]
     eventName: str
     eventType: str
     eventDetail: str
@@ -43,11 +50,18 @@ class EventModel(BaseModel):
 class EventsResponse(BaseModel):
     events: List[EventModel]
 
+class CreateEvent(BaseModel):
+    id: int
+    eventName: str
+
+    class Config:
+        orm_mode = True    
+
 
 
 ##BOOK
 class BookModel(BaseModel):
-    id: int
+    id: Optional[int]
     bookAuthor: str
     bookName: str
     bookSummary: str
@@ -55,15 +69,25 @@ class BookModel(BaseModel):
     rating: float
     textDirection: str
     tags: str
-    created_at: datetime
+    created_at: Optional[datetime]
     publicationDate: str
  
     class Config:
         orm_mode = True
 
 
+
+
+
 class BookResponse(BaseModel):
     books: List[BookModel]
+
+class CreateBook(BaseModel):
+    id: int
+    bookName: str
+
+    class Config:
+        orm_mode = True
 
 
 
@@ -84,17 +108,13 @@ def get_book_response(books):
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
-    phone: str
-    f_name: str
 
 
 class UserOut(BaseModel):
     id: int
     email: EmailStr
-    phone: str
-    f_name: str
+    created_at: datetime
    
-
     class Config:
         orm_mode = True
 
